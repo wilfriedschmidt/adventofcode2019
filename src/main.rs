@@ -1,6 +1,8 @@
 mod util;
+mod grid;
 mod day1;
 mod day2;
+mod day3;
 
 use std::env;
 
@@ -22,6 +24,11 @@ fn main()
     if args[1]=="day2" || args[1]=="all"
     {
       day2::go("./data/day2_input.txt");
+    }
+
+    if args[1]=="day3" || args[1]=="all"
+    {
+      day3::go("./data/day3_input.txt");
     }
   }
 }
