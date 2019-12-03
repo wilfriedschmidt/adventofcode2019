@@ -18,5 +18,5 @@ They are:
 
 ``` bash
 cargo build
-cargo run dayx
+cargo run all
 ```
