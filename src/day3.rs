@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use crate::util::*;
 
-fn writegrid(x:i64, y:i64, steps:&mut i32, k:usize, grid:&mut HashMap<i64,i32>, mindist:&mut i64, minsteps:&mut i32)
+fn writegrid(x:i64, y:i64, k:usize, steps:&mut i32, grid:&mut HashMap<i64,i32>, mindist:&mut i64, minsteps:&mut i32)
 {
   let index = y*500000+x;
   if grid.contains_key(&index) && k==1
@@ -57,7 +57,7 @@ pub fn go(filename:&str)
       {
         for _j in 0..length
         {
-          writegrid(x,y,&mut steps,k,&mut grid,&mut mindist, &mut minsteps);
+          writegrid(x, y, k, &mut steps, &mut grid, &mut mindist, &mut minsteps);
           y-=1;
         }
       }
@@ -65,7 +65,7 @@ pub fn go(filename:&str)
       {
         for _j in 0..length
         {
-          writegrid(x,y,&mut steps,k,&mut grid,&mut mindist, &mut minsteps);
+          writegrid(x, y, k, &mut steps, &mut grid, &mut mindist, &mut minsteps);
           y+=1;
         }
       }
@@ -73,7 +73,7 @@ pub fn go(filename:&str)
       {
         for _j in 0..length
         {
-          writegrid(x,y,&mut steps,k,&mut grid,&mut mindist, &mut minsteps);
+          writegrid(x, y, k, &mut steps, &mut grid, &mut mindist, &mut minsteps);
           x+=1;
         }
       }
@@ -81,7 +81,7 @@ pub fn go(filename:&str)
       {
         for _j in 0..length
         {
-          writegrid(x,y,&mut steps,k,&mut grid,&mut mindist, &mut minsteps);
+          writegrid(x, y, k, &mut steps, &mut grid, &mut mindist, &mut minsteps);
           x-=1;
         }
       }
