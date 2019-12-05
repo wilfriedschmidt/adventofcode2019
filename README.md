@@ -20,4 +20,3 @@ They are:
 cargo build
 cargo run all
 ```
-
