@@ -2,6 +2,7 @@ use crate::util::*;
 
 pub fn go(filename:&str)
 {
+
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
   let lines:Vec<&str> = payloadstr.split('\n').collect();
