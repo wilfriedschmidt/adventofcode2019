@@ -22,10 +22,7 @@ pub fn go()
       let digit = temp%10;
       temp = temp/10;
 
-      if lastdigit==-1
-      {
-        lastdigit = digit;
-      }
+      if lastdigit==-1 { lastdigit = digit; }
       else if digit==lastdigit
       {
         haspair = true;
@@ -33,29 +30,17 @@ pub fn go()
       }
       else
       {
-        if haspaircount==1
-        {
-          atleastonepair = true
-        }
+        if haspaircount==1 { atleastonepair = true }
         haspaircount=0;
       }
 
-      if digit>lastdigit
-      {
-        isincreasing = false;
-      }
+      if digit>lastdigit { isincreasing = false; }
 
       lastdigit = digit;    
     }
 
-    if isincreasing && haspair
-    {
-      countpart1+=1;
-    }
-    if isincreasing && (atleastonepair || haspaircount==1)
-    {
-      countpart2+=1;
-    }
+    if isincreasing && haspair { countpart1+=1; }
+    if isincreasing && (atleastonepair || haspaircount==1) { countpart2+=1; }
   }
 
   println!("{} {}",countpart1, countpart2);
