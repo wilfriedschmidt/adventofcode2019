@@ -1,4 +1,5 @@
 mod util;
+mod day;
 mod day1;
 mod day2;
 mod day3;
@@ -6,6 +7,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 extern crate time;
 
@@ -21,6 +23,12 @@ fn main()
   } 
   else
   {
+
+    /*type gofn(&str) -> (String,String);
+    let functions = Vec::new();
+    functions.push(Day  
+    */
+
     if args[1]=="day1" || args[1]=="all"
     {
       let start = time::precise_time_ns();
@@ -75,6 +83,14 @@ fn main()
       day7::go("./data/day7_input.txt");
       let end = time::precise_time_ns();
       println!("day7 duration: {}ms", (end-start)/1000000);
+    }
+
+    if args[1]=="day8" || args[1]=="all"
+    {
+      let start = time::precise_time_ns(); 
+      day8::go("./data/day8_test1.txt");
+      let end = time::precise_time_ns();
+      println!("day8 duration: {}ms", (end-start)/1000000);
     }
   }
 }
