@@ -30,7 +30,7 @@ fn writegrid(x:i64, y:i64, k:usize, steps:&mut i32, grid:&mut HashMap<i64,i32>, 
   *steps+=1;
 }
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
@@ -88,5 +88,5 @@ pub fn go(filename:&str)
     }
   }
 
-  println!("mindist: {}, minsteps: {}", mindist, minsteps); 
+  return (mindist.to_string(),minsteps.to_string());
 }

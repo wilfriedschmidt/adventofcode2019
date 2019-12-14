@@ -1,6 +1,6 @@
 use crate::util::*;
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
 
   let payload:Vec<u8> = readfile(filename);
@@ -26,31 +26,13 @@ pub fn go(filename:&str)
       loop
       {
         fuelformassandfuel = fuelformassandfuel/3 - 2;
-        if fuelformassandfuel>0
-        {
-          fuelforeverything+=fuelformassandfuel;
-        }
-        else
-        {
-          break;
-        }
+        if fuelformassandfuel>0 { fuelforeverything+=fuelformassandfuel; } else { break; }
       } 
     }
     i+=1;
 
-    if i>=lines.len()
-    {
-      break;
-    }
+    if i>=lines.len() { break; }
   }
 
-  println!("sum for mass: {} fuel for everything: {}", sumformass, fuelforeverything);
-  if (sumformass==3404722) && (fuelforeverything==5104215)
-  {
-    println!("PASSED");
-  }
-  else
-  {
-    println!("FAILED");
-  }
+  return ( sumformass.to_string(), fuelforeverything.to_string() );
 }

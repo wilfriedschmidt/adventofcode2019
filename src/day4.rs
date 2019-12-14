@@ -1,4 +1,4 @@
-pub fn go()
+pub fn go(_filename:&str) -> (String,String)
 {
   let start:i32 = 125730;
   let end:i32 = 579381;
@@ -43,5 +43,5 @@ pub fn go()
     if isincreasing && (atleastonepair || haspaircount==1) { countpart2+=1; }
   }
 
-  println!("{} {}",countpart1, countpart2);
+  return (countpart1.to_string(),countpart2.to_string());
 }

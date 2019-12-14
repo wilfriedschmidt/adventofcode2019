@@ -1,6 +1,6 @@
 use crate::util::*;
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
@@ -20,6 +20,9 @@ pub fn go(filename:&str)
   
   let mut tempints:Vec<i64> = Vec::new();
   tempints.resize(ints.len(), 0);
+
+  let mut part1output = String::new();
+  let mut part2output = String::new();
 
   for noun in 0..99
   {
@@ -59,29 +62,12 @@ pub fn go(filename:&str)
         {
           if noun==12 && verb==2
           {
-            println!("part one halt: value at index 0: {}", tempints[0]);
-            
-            if tempints[0]==7210630
-            {
-               println!("PASSED");
-            }
-            else
-            {
-              println!("FAILED");
-            }
+            part1output = tempints[0].to_string();
           }
 
           if tempints[0]==19690720
           {
-            println!("part two halt: noun and verb: {}", 100*noun+verb);
-            if 100*noun+verb==3892
-            {
-                println!("PASSED");
-            }
-            else
-            {
-              println!("FAILED");
-            }
+            part2output = (100*noun+verb).to_string();
           }
 
           break;    
@@ -100,4 +86,6 @@ pub fn go(filename:&str)
       }
     }
   }
+
+  return ( part1output, part2output );
 }

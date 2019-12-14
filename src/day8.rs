@@ -1,6 +1,6 @@
 use crate::util::*;
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
@@ -42,16 +42,16 @@ pub fn go(filename:&str)
     }
   }
 
-  println!("{} {}", lowestzeroes, lowestones * lowesttwos);
-
   count=0;
-  for y in 0..6
+  for _y in 0..6
   {
-    for x in 0..25
+    for _x in 0..25
     {
       if image[count]=='1' { print!("{}",image[count]); } else { print!(" "); }
       count+=1;
     }
     println!();
   }
+
+  return ((lowestones * lowesttwos).to_string(),String::new());
 }

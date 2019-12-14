@@ -1,6 +1,6 @@
 use crate::util::*;
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
@@ -32,12 +32,9 @@ pub fn go(filename:&str)
   inputs.resize(1,1);
 
   let mut inputindex = 0;
-  let mut output = 0;
+  let mut output1 = 0;
 
-  runprogram(&mut program, &mut instpointer, &inputs, &mut inputindex, &mut output); 
-
-  println!("{}",output);
-
+  runprogram(&mut program, &mut instpointer, &inputs, &mut inputindex, &mut output1); 
 
   // part 2
   for i in 0..ints.len()
@@ -48,7 +45,8 @@ pub fn go(filename:&str)
   instpointer = 0;
   inputs[0] = 5;
   inputindex = 0;
-  runprogram(&mut program, &mut instpointer, &inputs, &mut inputindex, &mut output); 
+  let mut output2 = 0;
+  runprogram(&mut program, &mut instpointer, &inputs, &mut inputindex, &mut output2); 
 
-  println!("{}",output);
+  return (output1.to_string(),output2.to_string());
 }

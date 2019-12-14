@@ -1,5 +1,4 @@
 mod util;
-mod day;
 mod day1;
 mod day2;
 mod day3;
@@ -8,6 +7,11 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
+mod day10;
+mod day11;
+mod day12;
+mod coord;
 
 extern crate time;
 
@@ -23,74 +27,32 @@ fn main()
   } 
   else
   {
+    type Gofn = fn(&str) -> (String,String);
 
-    /*type gofn(&str) -> (String,String);
-    let functions = Vec::new();
-    functions.push(Day  
-    */
+    let mut functions = Vec::<Gofn>::new();
+    functions.push(day1::go);  
+    functions.push(day2::go);  
+    functions.push(day3::go);  
+    functions.push(day4::go);  
+    functions.push(day5::go);  
+    functions.push(day6::go);  
+    functions.push(day7::go);  
+    functions.push(day8::go);
+    functions.push(day9::go);
+    functions.push(day10::go);
+    functions.push(day11::go);
+    functions.push(day12::go);  
 
-    if args[1]=="day1" || args[1]=="all"
+    for i in 0..functions.len()
     {
-      let start = time::precise_time_ns();
-      day1::go("./data/day1_input.txt");
-      let end = time::precise_time_ns();
-      println!("day1 duration: {}ms", (end-start)/1000000);
-    }
+      if args[1]=="all" || args[1].parse::<usize>().unwrap()==i+1
+      {
+        let start = time::precise_time_ns();
+        let pair = functions[i](&format!("./data/day{}_input.txt",i+1));
+        let end = time::precise_time_ns();
 
-    if args[1]=="day2" || args[1]=="all"
-    {
-      let start = time::precise_time_ns();
-      day2::go("./data/day2_input.txt");
-      let end = time::precise_time_ns();
-      println!("day2 duration: {}ms", (end-start)/1000000);
-    }
-
-    if args[1]=="day3" || args[1]=="all"
-    {
-      let start = time::precise_time_ns();
-      day3::go("./data/day3_input.txt");
-      let end = time::precise_time_ns();
-      println!("day3 duration: {}ms", (end-start)/1000000);
-    }
-
-    if args[1]=="day4" || args[1]=="all"
-    {
-      let start = time::precise_time_ns();
-      day4::go();
-      let end = time::precise_time_ns();
-      println!("day4 duration: {}ms", (end-start)/1000000);
-    }
-
-    if args[1]=="day5" || args[1]=="all"
-    {
-      let start = time::precise_time_ns();
-      day5::go("./data/day5_input.txt");
-      let end = time::precise_time_ns();
-      println!("day5 duration: {}ms", (end-start)/1000000); 
-    }
-
-    if args[1]=="day6" || args[1]=="all"
-    {
-      let start = time::precise_time_ns();
-      day6::go("./data/day6_input.txt");
-      let end = time::precise_time_ns();
-      println!("day6 duration: {}ms", (end-start)/1000000);
-    }
-
-    if args[1]=="day7" || args[1]=="all"
-    {
-      let start = time::precise_time_ns(); 
-      day7::go("./data/day7_input.txt");
-      let end = time::precise_time_ns();
-      println!("day7 duration: {}ms", (end-start)/1000000);
-    }
-
-    if args[1]=="day8" || args[1]=="all"
-    {
-      let start = time::precise_time_ns(); 
-      day8::go("./data/day8_test1.txt");
-      let end = time::precise_time_ns();
-      println!("day8 duration: {}ms", (end-start)/1000000);
+        println!("{} {} {}ms", pair.0, pair.1, (end-start)/1000000);
+      }
     }
   }
 }

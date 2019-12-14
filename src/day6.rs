@@ -14,7 +14,7 @@ fn count(orbit:&str, orbits:&Vec<&str>, parents:&HashMap<&str,&str>, path:&mut V
   return sum+1;
 }
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   let payload:Vec<u8> = readfile(filename);
   let payloadstr:String = String::from_utf8(payload).unwrap();
@@ -52,6 +52,7 @@ pub fn go(filename:&str)
   let sanorbits:&Vec::<String> = &allpaths["SAN"];
   let youorbits:&Vec::<String> = &allpaths["YOU"];
 
+  let mut output2 = 0;
   let mut found = false;
   for i in 0..sanorbits.len()
   {
@@ -59,7 +60,7 @@ pub fn go(filename:&str)
     {
       if sanorbits[i]==youorbits[j]
       {
-        println!("{} {}", sanorbits[i], i+j);
+        output2 = i+j;
         found = true;
         break;
       }
@@ -68,5 +69,5 @@ pub fn go(filename:&str)
     if found { break; }
   }
 
-  println!("{}", total - orbits.len() as i32);
+  return ((total - orbits.len() as i32).to_string(),output2.to_string());
 }

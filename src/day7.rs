@@ -100,7 +100,7 @@ fn run_phases(allphases:&Vec<Vec<i64>>, ints:&Vec<i64>) -> i64
   return largest;
 }
 
-pub fn go(filename:&str)
+pub fn go(filename:&str) -> (String,String)
 {
   // load program
   let payload:Vec<u8> = readfile(filename);
@@ -120,8 +120,10 @@ pub fn go(filename:&str)
   }
 
   let allphases = generate_phases(0);
-  println!("part 1 largest output: {}",run_phases(&allphases,&ints));
-  
+  let part1 = run_phases(&allphases,&ints);
+
   let allfeedbackphases = generate_phases(5);
-  println!("part 2 largest output: {}",run_phases(&allfeedbackphases,&ints));
+  let part2 = run_phases(&allfeedbackphases,&ints);
+
+  return (part1.to_string(),part2.to_string()); 
 }
