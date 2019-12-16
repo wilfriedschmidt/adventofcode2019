@@ -1,25 +1,14 @@
 use std::collections::HashMap;
 use crate::util::*;
+use crate::intcode::*;
 extern crate num_bigint;
 extern crate num_traits;
 
-fn robot(ints:&Vec<i64>, inputvalue:i64) -> usize
+fn robot(program:&mut Program, inputvalue:i64) -> usize
 {
   // initialize inputs
   let mut input = Vec::new();
-  let mut inputindex=0;
   input.push(fi64(inputvalue));
-
-  // initialize programs
-  let mut program = HashMap::new();
-  let mut instpointer = fi64(0);
-
-  for j in 0..ints.len()
-  {
-    let address:num_bigint::BigInt = fi64(j as i64);
-    let value:num_bigint::BigInt = fi64(ints[j]);
-    program.insert(address,value);
-  }
   
   let mut x=0;
   let mut y=0;
@@ -35,33 +24,31 @@ fn robot(ints:&Vec<i64>, inputvalue:i64) -> usize
 
   loop
   {
-    inputindex=0;
-
     let offset = y*10000+x;
     if panels.contains_key(&offset)
     {
-      input[inputindex] = fi64(panels[&offset]);
+      input[0] = fi64(panels[&offset]);
     }
     else
     {
-      input[inputindex] = fi64(0);
+      input[0] = fi64(0);
     }
 
-    let mut paint = fi64(0);    
-    runprogram_bigint(&mut program, &mut instpointer, &input, &mut inputindex, &mut paint);
+    let mut paint = fi64(0);
+    program.step( &input, &mut paint);
 
     if paint==fi64(0)
     {
       // black
       panels.insert(offset,0);
     }
-    else
+    else if paint==fi64(1)
     {
       panels.insert(offset,1);
     }
     
     let mut rot = fi64(0);
-    let retval = runprogram_bigint(&mut program, &mut instpointer, &input, &mut inputindex, &mut rot);
+    let retval = program.step( &input, &mut rot);
 
     if rot==fi64(0)
     {
@@ -71,7 +58,7 @@ fn robot(ints:&Vec<i64>, inputvalue:i64) -> usize
       else if dir==2 { dir = 1; }
       else if dir==3 { dir = 2; }
     }
-    else
+    else if rot==fi64(1)
     {
       if dir==0 { dir = 1; }
       else if dir==1 { dir = 2; }
@@ -92,9 +79,9 @@ fn robot(ints:&Vec<i64>, inputvalue:i64) -> usize
     if retval==1 { break; }
   }
 
-  for i in miny..maxy
+  for i in miny..maxy+1
   {
-    for j in minx..maxx
+    for j in minx..maxx+1
     {
       let offset = i*10000+j;
       if panels.contains_key(&offset)
@@ -121,25 +108,13 @@ fn robot(ints:&Vec<i64>, inputvalue:i64) -> usize
 
 pub fn go(filename:&str) -> (String,String)
 {
-  // load program
-  let payload:Vec<u8> = readfile(filename);
-  let payloadstr:String = String::from_utf8(payload).unwrap();
-  let parts:Vec<&str> = payloadstr.split(',').collect();
+  let mut program1 = Program::default();
+  program1.load(filename);
+  let output1 = robot(&mut program1, 0);
 
-  let mut ints:Vec<i64> = Vec::new();
-  ints.resize(parts.len()*10, 0);
-
-  for i in 0..parts.len()-1
-  {
-    if parts[i].len()>0
-    {
-      let opcode = &parts[i].parse::<i64>().unwrap();
-      ints[i] = *opcode;
-    }
-  }
-
-  let output1 = robot(&ints, 0);
-  let output2 = robot(&ints, 1);
+  let mut program2 = Program::default();
+  program2.load(filename);
+  let output2 = robot(&mut program2, 1);
 
   return (output1.to_string(),output2.to_string()); 
 }

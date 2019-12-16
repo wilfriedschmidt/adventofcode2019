@@ -140,7 +140,7 @@ pub fn go(filename:&str) -> (String,String)
   
   let _zero = fi64(0);
 
-  let mut output2 = fi64(0);
+  let output2;
   loop
   {
     if x<y { x=x+xi.clone(); }
