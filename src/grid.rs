@@ -27,10 +27,6 @@ impl <T: std::string::ToString> Grid<T>
     {
       self.data[ (y*self.width + x) as usize ] = value;
     }
-    else
-    {
-      println!("out of bounds {} {} ", x, y);
-    }
   }
 
   pub fn get(&self, x:i32, y:i32) -> &T

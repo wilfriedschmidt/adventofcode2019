@@ -47,15 +47,15 @@ fn game(program:&mut Program) -> (usize,i64)
   loop
   {
     let mut bigx = fi64(0);
-    program.step( &input, &mut bigx);
+    program.step( &mut input, &mut bigx);
     let x = ti64(&bigx);
 
     let mut bigy = fi64(0);
-    program.step( &input, &mut bigy);
+    program.step( &mut input, &mut bigy);
     let y = ti64(&bigy);
 
     let mut tile = fi64(0);
-    let retval = program.step( &input, &mut tile);
+    let retval = program.step( &mut input, &mut tile);
 
     let offset = y*10000+x;
     grid.insert(offset,ti64(&tile));

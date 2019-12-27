@@ -95,6 +95,7 @@ pub fn runprogram(program:&mut Vec::<i64>, instpointer:&mut usize, inputs:&Vec::
   return retval;
 }
 
+#[derive(Clone)]
 pub struct Program
 {
   program:HashMap::<num_bigint::BigInt,num_bigint::BigInt>, 
@@ -184,9 +185,16 @@ impl Program
     }
   }
 
-  pub fn step(&mut self, inputs:&Vec::<num_bigint::BigInt>, output:&mut num_bigint::BigInt) -> i32
+  pub fn print(&self)
   {
-    let mut inputindex = 0;
+    for i in 0..self.program.len()
+    {
+      print!("{} ",ti64(&self.program[&fi64(i as i64)]));
+    }
+  }
+
+  pub fn step(&mut self, inputs:&mut Vec::<num_bigint::BigInt>, output:&mut num_bigint::BigInt) -> i32
+  {
     let mut retval = -1;
     loop
     {
@@ -225,7 +233,7 @@ impl Program
 
         if instruction==3
         {
-          if inputindex>=inputs.len()
+          if inputs.len()==0
           {
             // not done
             //println!("ran out of inputs");
@@ -235,16 +243,16 @@ impl Program
           let mut rparam1 = self.relativebase.clone();
           rparam1+=param1.clone();
 
-          if mode1==0 { self.writebigint( &param1, &inputs[inputindex].clone() ); } 
-          else if mode1==2 { self.writebigint( &rparam1, &inputs[inputindex].clone()); }
+          if mode1==0 { self.writebigint( &param1, &inputs[ inputs.len()-1 ].clone() ); } 
+          else if mode1==2 { self.writebigint( &rparam1, &inputs[ inputs.len()-1 ].clone()); }
 
-          inputindex+=1;
+          inputs.pop();
         }
         else if instruction==4 
         { 
           let dparam1 = self.readwithmode( mode1, &param1 );
           *output = dparam1;
-          retval = 0;
+          retval = 1;
         }
         else if instruction==9 
         { 
@@ -269,13 +277,13 @@ impl Program
 
       else if instruction==99
       {
-        retval = 1;
+        retval = 2;
       }
 
       else
       {
         println!("bad opcode ip: {}, code: {} ", self.instpointer.to_str_radix(10), self.readbigint(&self.instpointer.clone()).to_str_radix(10) );
-        retval = 1;
+        retval = 3;
         break;
       }
 

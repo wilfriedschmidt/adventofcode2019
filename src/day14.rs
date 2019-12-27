@@ -39,7 +39,6 @@ impl Default for Reaction
 
 fn doreaction(index:i64,reactions:&HashMap<String,Reaction>, inventory:&mut HashMap<String,i64>, reactionname:&str, totalore:&mut i64, oreremaining:&mut i64) -> bool
 {
-
   let reaction = &reactions[reactionname];
 
   // use inventory
@@ -75,6 +74,7 @@ fn doreaction(index:i64,reactions:&HashMap<String,Reaction>, inventory:&mut Hash
         else
         {
           exiting = doreaction(index+1, &reactions, inventory, &reaction.inputs[i].name, totalore, oreremaining);
+          if exiting { break; }
         }
       }
       else
@@ -91,19 +91,6 @@ fn doreaction(index:i64,reactions:&HashMap<String,Reaction>, inventory:&mut Hash
     // add back to inventory
     *inventory.get_mut(&reaction.output.name).unwrap() += reaction.output.amount.clone();
   }
-/*
-  for i in 0..index
-  {
-    print!(" ");
-  }
-
-  // use inventory
-  print!("{}: ", reactionname);
-  for (k,v) in inventory.iter()
-  {
-    print!("{} {}, ", k,v);
-  }
-  println!("");*/
 
   return exiting;
 }
@@ -162,52 +149,14 @@ pub fn go(filename:&str) -> (String,String)
   let mut totalore = 0;
   let mut oreremaining = 1000000000000;
 
-  doreaction(index,&reactions, &mut inventory,"FUEL", &mut totalore, &mut oreremaining);
+  doreaction(index, &reactions, &mut inventory,"FUEL", &mut totalore, &mut oreremaining);
   let output1 = totalore;
 
-  let mut firstinv = HashMap::new();
-  firstinv = inventory.clone();
+  println!("{}",output1.to_string());
 
   loop
   {
-    if doreaction(index,&reactions, &mut inventory,"FUEL", &mut totalore, &mut oreremaining) { break; }
-
-    let mut m = true;
-    for (k,v) in inventory.iter()
-    {
-      if k != "FUEL" && k != "ORE"
-      {
-        if firstinv[k] != *v
-        {
-          m = false;
-          break;
-        }
-      }
-    } 
-
-    if m
-    {
-      println!("{} {}",totalore, inventory["FUEL"]);
-    }
-
-    /*
-    let mut allzeroes = true;
-    for (k,v) in inventory.iter()
-    {
-      if k != "FUEL" && k != "ORE"
-      {
-        if *v != 0
-        {
-          allzeroes = false;
-          break;
-        }
-      }
-    }
-
-    if allzeroes
-    {
-      println!("{} {} {}", inventory["FUEL"], oreremaining, totalore);
-    }*/
+    if doreaction(index, &reactions, &mut inventory,"FUEL", &mut totalore, &mut oreremaining) { break; }
   }
 
   let output2 = inventory["FUEL"];

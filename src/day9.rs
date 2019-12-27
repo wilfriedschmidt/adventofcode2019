@@ -15,7 +15,7 @@ pub fn go(filename:&str) -> (String,String)
   let mut output1 = fi64(0);
   loop
   {
-    let retval = program1.step( &input, &mut output1);
+    let retval = program1.step( &mut input, &mut output1);
     if retval==1 { break; }
   }
 
@@ -27,7 +27,7 @@ pub fn go(filename:&str) -> (String,String)
   let mut output2 = fi64(0);
   loop
   {
-    let retval = program2.step( &input, &mut output2);
+    let retval = program2.step( &mut input, &mut output2);
     if retval==1 { break; }
   }
   

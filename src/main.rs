@@ -1,5 +1,6 @@
 mod util;
 mod coord;
+mod grid;
 mod intcode;
 mod day1;
 mod day2;
@@ -15,6 +16,14 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
+mod day16;
+mod day17;
+mod day18;
+mod day19;
+mod day20;
+mod day22;
+mod day24;
 
 extern crate time;
 
@@ -47,6 +56,16 @@ fn main()
     functions.push(day12::go);
     functions.push(day13::go);
     functions.push(day14::go);
+    functions.push(day15::go);
+    functions.push(day16::go);
+    functions.push(day17::go);
+    functions.push(day18::go);
+    functions.push(day19::go);
+    functions.push(day20::go);
+functions.push(day19::go);
+    functions.push(day22::go);
+ functions.push(day22::go);
+    functions.push(day24::go);
 
     for i in 0..functions.len()
     {

@@ -35,7 +35,7 @@ fn robot(program:&mut Program, inputvalue:i64) -> usize
     }
 
     let mut paint = fi64(0);
-    program.step( &input, &mut paint);
+    program.step( &mut input, &mut paint);
 
     if paint==fi64(0)
     {
@@ -48,7 +48,7 @@ fn robot(program:&mut Program, inputvalue:i64) -> usize
     }
     
     let mut rot = fi64(0);
-    let retval = program.step( &input, &mut rot);
+    let retval = program.step( &mut input, &mut rot);
 
     if rot==fi64(0)
     {
